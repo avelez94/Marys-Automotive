@@ -210,15 +210,23 @@
     }
 
     /* ─── LEGACY ─── */
+    .legacy-band {
+      background: var(--red-deep);
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .legacy-band .section { border-top: none; }
+    .legacy-band .section-eyebrow { color: rgba(255,255,255,.55); }
+    .legacy-band .section-title { color: #fff; }
     .legacy { display: grid; gap: 32px; margin-top: 40px; }
     .stat-block { display: flex; flex-direction: column; gap: 4px; }
     .stat-num {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: clamp(52px, 9vw, 88px); font-weight: 900;
-      color: var(--red-bright); line-height: 1; letter-spacing: -2px;
+      color: #fff; line-height: 1; letter-spacing: -2px;
     }
-    .stat-label { font-size: 14px; color: var(--cream-2); font-weight: 500; letter-spacing: .5px; }
-    .legacy-body { font-size: clamp(15px, 2.2vw, 18px); color: var(--cream-2); line-height: 1.7; max-width: 560px; }
+    .stat-label { font-size: 14px; color: rgba(255,255,255,.65); font-weight: 500; letter-spacing: .5px; }
+    .legacy-body { font-size: clamp(15px, 2.2vw, 18px); color: rgba(255,255,255,.8); line-height: 1.7; max-width: 560px; }
     .legacy-stats { display: flex; flex-wrap: wrap; gap: 40px; }
 
     /* ─── SERVICES ─── */
@@ -405,7 +413,7 @@
     </div>
     <div class="hero-badges">
       <span class="badge">★★★★★ 5.0 rating</span>
-      <span class="badge">592 customers served</span>
+      <span class="badge">1,000+ customers served</span>
       <span class="badge">Family owned</span>
       <span class="badge">Open 24 / 7</span>
     </div>
@@ -439,30 +447,32 @@
 
   <main>
 
-    <!-- LEGACY -->
-    <section class="section" aria-labelledby="legacy-heading">
-      <p class="section-eyebrow">Our story</p>
-      <h2 class="section-title" id="legacy-heading">30 Years in the Neighborhood</h2>
-      <div class="legacy">
-        <div class="legacy-stats">
-          <div class="stat-block">
-            <div class="stat-num">30+</div>
-            <div class="stat-label">Years in business</div>
+    <!-- LEGACY (full bleed red band) -->
+    <div class="legacy-band">
+      <section class="section" aria-labelledby="legacy-heading">
+        <p class="section-eyebrow">Our story</p>
+        <h2 class="section-title" id="legacy-heading">30 Years in the Neighborhood</h2>
+        <div class="legacy">
+          <div class="legacy-stats">
+            <div class="stat-block">
+              <div class="stat-num">30+</div>
+              <div class="stat-label">Years in business</div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-num">5.0</div>
+              <div class="stat-label">Star rating</div>
+            </div>
+            <div class="stat-block">
+              <div class="stat-num">592</div>
+              <div class="stat-label">Customers served</div>
+            </div>
           </div>
-          <div class="stat-block">
-            <div class="stat-num">5.0</div>
-            <div class="stat-label">Star rating</div>
-          </div>
-          <div class="stat-block">
-            <div class="stat-num">592</div>
-            <div class="stat-label">Customers served</div>
-          </div>
+          <p class="legacy-body">
+            Mary's Automotive has been fixing cars on the west side of Indianapolis since 1994. We're not a franchise. We don't upsell you. We tell you what your car needs, what it costs, and we get it done. Every make, every model, every time.
+          </p>
         </div>
-        <p class="legacy-body">
-          Mary's Automotive has been fixing cars on the west side of Indianapolis since 1994. We're not a franchise. We don't upsell you. We tell you what your car needs, what it costs, and we get it done. Every make, every model, every time.
-        </p>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- SERVICES -->
     <section class="section" aria-labelledby="services-heading">
@@ -541,40 +551,6 @@
       </div>
     </section>
 
-    <!-- REVIEWS -->
-    <section class="section" aria-labelledby="reviews-heading">
-      <p class="section-eyebrow">What people say</p>
-      <h2 class="section-title" id="reviews-heading">5 Stars. Every Time.</h2>
-      <div class="reviews-grid">
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Amazing and fast service. They've been my mechanics since I started driving."</p>
-          <div class="review-author">Marquita V.</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Honest, professional, and great prices. Better than any dealership I've been to."</p>
-          <div class="review-author">Mechelle P.</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Up front about everything. No surprises on the bill. That means everything."</p>
-          <div class="review-author">Indianapolis customer</div>
-        </div>
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-quote">"Family shop feel with professional results. I won't take my car anywhere else."</p>
-          <div class="review-author">Indianapolis customer</div>
-        </div>
-      </div>
-      <div class="reviews-cta">
-        <a class="btn-review" href="https://share.google/7dQRxRcXokBQ7mKBr" target="_blank" rel="noopener">
-          ★ Leave Us a Review on Google
-        </a>
-        <span style="font-size:13px; color:var(--sub);">Takes less than a minute and means the world to us.</span>
-      </div>
-    </section>
-
     <!-- FAQ -->
     <section class="section" aria-labelledby="faq-heading">
       <p class="section-eyebrow">Common questions</p>
@@ -629,6 +605,40 @@
           <div class="faq-answer">Call us at (317) 491-3393, text us, or fill out the quote form above. We'll get back to you quickly and coordinate a time to drop off your vehicle.</div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section" aria-labelledby="reviews-heading">
+      <p class="section-eyebrow">What people say</p>
+      <h2 class="section-title" id="reviews-heading">5 Stars. Every Time.</h2>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Amazing and fast service. They've been my mechanics since I started driving."</p>
+          <div class="review-author">Marquita V.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Honest, professional, and great prices. Better than any dealership I've been to."</p>
+          <div class="review-author">Mechelle P.</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Up front about everything. No surprises on the bill. That means everything."</p>
+          <div class="review-author">Indianapolis customer</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-quote">"Family shop feel with professional results. I won't take my car anywhere else."</p>
+          <div class="review-author">Indianapolis customer</div>
+        </div>
+      </div>
+      <div class="reviews-cta">
+        <a class="btn-review" href="https://g.page/r/marysautomotive/review" target="_blank" rel="noopener">
+          ★ Leave Us a Review on Google
+        </a>
+        <span style="font-size:13px; color:var(--sub);">Takes less than a minute and means the world to us.</span>
       </div>
     </section>
 
