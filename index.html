@@ -11,8 +11,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mary's Automotive | Full-Service Auto Repair Indianapolis</title>
-  <meta name="description" content="Full-service auto repair in Indianapolis. 30 years. Honest prices. Call (317) 491-3393 or visit 3249 W Washington St." />
+  <meta name="description" content="Full-service auto repair in Indianapolis for 30 years. Honest prices, same-day service, all makes and models. Call (317) 491-3393 or visit 3249 W Washington St." />
+  <meta name="keywords" content="auto repair Indianapolis, car mechanic Indianapolis, oil change Indianapolis, brake repair Indianapolis, engine diagnostic Indianapolis, Mary's Automotive" />
   <meta name="theme-color" content="#8a0e18" />
+  <meta property="og:title" content="Mary's Automotive | Full-Service Auto Repair Indianapolis" />
+  <meta property="og:description" content="30 years of honest, full-service auto repair on the west side of Indianapolis. Call (317) 491-3393." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://marysautomotive.com" />
+  <link rel="canonical" href="https://marysautomotive.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -22,18 +28,16 @@
       --red-bright:#c01020;
       --charcoal:  #111418;
       --charcoal-2:#1c2026;
+      --charcoal-3:#242930;
       --cream:     #f0ebe3;
       --cream-2:   #e0d8cc;
-      --ink:       #1a1d21;
       --sub:       #7a8290;
       --white:     #ffffff;
       --maxw:      1060px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--charcoal);
       color: var(--cream);
@@ -62,407 +66,279 @@
       text-decoration: none;
       letter-spacing: .3px;
     }
-    .sticky-call .sc-label {
-      font-size: 13px;
-      opacity: .75;
-      font-weight: 500;
-    }
-    .sticky-call .sc-divider {
-      width: 1px;
-      height: 20px;
-      background: rgba(255,255,255,.25);
-    }
+    .sticky-call .sc-label { font-size: 13px; opacity: .75; font-weight: 500; }
+    .sticky-call .sc-divider { width: 1px; height: 20px; background: rgba(255,255,255,.25); }
 
-    /* ─── HEADER / NAV ─── */
+    /* ─── HEADER ─── */
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      position: sticky; top: 0; z-index: 50;
       background: var(--charcoal);
       border-bottom: 1px solid rgba(255,255,255,.07);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 0 clamp(16px, 4vw, 48px);
       height: 60px;
     }
     .wordmark {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--cream);
-      letter-spacing: .2px;
+      font-size: 18px; font-weight: 700;
+      color: var(--cream); letter-spacing: .2px;
     }
-    .wordmark span {
-      color: var(--red-bright);
-    }
+    .wordmark span { color: var(--red-bright); }
     .nav-phone {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--cream);
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 700; font-size: 15px; color: var(--cream);
       text-decoration: none;
       border: 1.5px solid rgba(255,255,255,.15);
-      padding: 7px 14px;
-      border-radius: 8px;
+      padding: 7px 14px; border-radius: 8px;
       transition: background .18s, border-color .18s;
     }
-    .nav-phone:hover {
-      background: var(--red);
-      border-color: var(--red);
-    }
+    .nav-phone:hover { background: var(--red); border-color: var(--red); }
     .nav-phone svg { flex-shrink: 0; }
 
     /* ─── HERO ─── */
     .hero {
       padding: clamp(56px, 10vw, 96px) clamp(16px, 5vw, 48px) clamp(48px, 8vw, 80px);
-      max-width: var(--maxw);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px;
+      max-width: var(--maxw); margin: 0 auto;
     }
-
     .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      margin-bottom: 18px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--red-bright); margin-bottom: 18px;
     }
     .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 2px;
-      background: var(--red-bright);
-      border-radius: 2px;
+      content: ''; display: block; width: 32px; height: 2px;
+      background: var(--red-bright); border-radius: 2px;
     }
-
     .hero-headline {
       font-family: 'Playfair Display', Georgia, serif;
-      font-weight: 900;
-      font-size: clamp(42px, 8vw, 86px);
-      line-height: 1.0;
-      letter-spacing: -1.5px;
-      color: var(--white);
+      font-weight: 900; font-size: clamp(42px, 8vw, 86px);
+      line-height: 1.0; letter-spacing: -1.5px; color: var(--white);
     }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--red-bright);
-    }
-
+    .hero-headline em { font-style: italic; color: var(--red-bright); }
     .hero-sub {
-      margin-top: 20px;
-      font-size: clamp(15px, 2.4vw, 18px);
-      color: var(--cream-2);
-      max-width: 520px;
-      line-height: 1.65;
+      margin-top: 20px; font-size: clamp(15px, 2.4vw, 18px);
+      color: var(--cream-2); max-width: 520px; line-height: 1.65;
     }
-
-    .hero-number {
-      margin-top: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .hero-number { margin-top: 32px; display: flex; flex-direction: column; gap: 4px; }
     .hero-number .hn-label {
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--sub);
-      font-weight: 600;
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--sub); font-weight: 600;
     }
     .hero-number a {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(34px, 6vw, 58px);
-      font-weight: 700;
-      color: var(--white);
-      text-decoration: none;
-      letter-spacing: -1px;
-      line-height: 1;
-      transition: color .15s;
+      font-size: clamp(34px, 6vw, 58px); font-weight: 700;
+      color: var(--white); text-decoration: none;
+      letter-spacing: -1px; line-height: 1; transition: color .15s;
     }
     .hero-number a:hover { color: var(--red-bright); }
-
-    .hero-badges {
-      margin-top: 28px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .hero-badges { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
     .badge {
-      font-size: 13px;
-      font-weight: 600;
-      padding: 7px 13px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(255,255,255,.05);
-      color: var(--cream-2);
+      font-size: 13px; font-weight: 600; padding: 7px 13px;
+      border-radius: 999px; border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.05); color: var(--cream-2);
     }
+    .hero-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; }
 
-    .hero-cta {
-      margin-top: 32px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+    /* ─── BUTTONS ─── */
     .btn-call {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--red);
-      color: #fff;
-      font-weight: 700;
-      font-size: 16px;
-      padding: 15px 26px;
-      border-radius: 10px;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--red); color: #fff; font-weight: 700; font-size: 16px;
+      padding: 15px 26px; border-radius: 10px; text-decoration: none;
       transition: background .18s, transform .12s;
       box-shadow: 0 8px 24px rgba(138,14,24,.45);
     }
     .btn-call:hover { background: var(--red-bright); transform: translateY(-1px); }
+    .btn-sms {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--charcoal-2); color: var(--cream); font-weight: 600; font-size: 15px;
+      padding: 15px 22px; border-radius: 10px; text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,.13);
+      transition: border-color .18s, color .18s;
+    }
+    .btn-sms:hover { border-color: var(--cream-2); color: var(--white); }
     .btn-dir {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      background: transparent;
-      color: var(--cream-2);
-      font-weight: 600;
-      font-size: 15px;
-      padding: 15px 22px;
-      border-radius: 10px;
-      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 9px;
+      background: transparent; color: var(--cream-2); font-weight: 600; font-size: 15px;
+      padding: 15px 22px; border-radius: 10px; text-decoration: none;
       border: 1.5px solid rgba(255,255,255,.18);
       transition: border-color .18s, color .18s;
     }
     .btn-dir:hover { border-color: var(--cream-2); color: var(--white); }
+    .btn-review {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: transparent; color: #f59e0b; font-weight: 700; font-size: 15px;
+      padding: 13px 20px; border-radius: 10px; text-decoration: none;
+      border: 1.5px solid rgba(245,158,11,.35);
+      transition: background .18s, border-color .18s;
+    }
+    .btn-review:hover { background: rgba(245,158,11,.1); border-color: #f59e0b; }
 
     /* ─── PHOTO STRIP ─── */
     .photo-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
       padding: 0 clamp(16px, 5vw, 48px);
-      max-width: var(--maxw);
-      margin: 0 auto 0;
+      max-width: var(--maxw); margin: 0 auto;
     }
     .photo-strip figure {
-      margin: 0;
-      border-radius: 14px;
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      position: relative;
+      margin: 0; border-radius: 14px; overflow: hidden;
+      aspect-ratio: 4/3; position: relative;
     }
     .photo-strip figure::after {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,.55) 100%);
     }
     .photo-strip img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: saturate(1.08) contrast(1.04);
-      transition: transform .4s ease;
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: saturate(1.08) contrast(1.04); transition: transform .4s ease;
     }
     .photo-strip figure:hover img { transform: scale(1.04); }
 
-    /* ─── SECTION WRAPPER ─── */
+    /* ─── SECTION ─── */
     .section {
-      max-width: var(--maxw);
-      margin: 0 auto;
+      max-width: var(--maxw); margin: 0 auto;
       padding: clamp(48px, 7vw, 80px) clamp(16px, 5vw, 48px);
     }
-    .section + .section {
-      border-top: 1px solid rgba(255,255,255,.06);
-    }
-
+    .section + .section { border-top: 1px solid rgba(255,255,255,.06); }
     .section-eyebrow {
-      font-size: 11px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--red-bright);
-      font-weight: 700;
-      margin-bottom: 14px;
+      font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--red-bright); font-weight: 700; margin-bottom: 14px;
     }
     .section-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(28px, 5vw, 44px);
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.1;
-      letter-spacing: -.5px;
+      font-size: clamp(28px, 5vw, 44px); font-weight: 700;
+      color: var(--white); line-height: 1.1; letter-spacing: -.5px;
     }
 
-    /* ─── LEGACY STAT ─── */
-    .legacy {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-      margin-top: 40px;
-    }
-    .stat-block {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    /* ─── LEGACY ─── */
+    .legacy { display: grid; gap: 32px; margin-top: 40px; }
+    .stat-block { display: flex; flex-direction: column; gap: 4px; }
     .stat-num {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(52px, 9vw, 88px);
-      font-weight: 900;
-      color: var(--red-bright);
-      line-height: 1;
-      letter-spacing: -2px;
+      font-size: clamp(52px, 9vw, 88px); font-weight: 900;
+      color: var(--red-bright); line-height: 1; letter-spacing: -2px;
     }
-    .stat-label {
-      font-size: 14px;
-      color: var(--cream-2);
-      font-weight: 500;
-      letter-spacing: .5px;
-    }
-    .legacy-body {
-      font-size: clamp(15px, 2.2vw, 18px);
-      color: var(--cream-2);
-      line-height: 1.7;
-      max-width: 560px;
-    }
-    .legacy-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-    }
+    .stat-label { font-size: 14px; color: var(--cream-2); font-weight: 500; letter-spacing: .5px; }
+    .legacy-body { font-size: clamp(15px, 2.2vw, 18px); color: var(--cream-2); line-height: 1.7; max-width: 560px; }
+    .legacy-stats { display: flex; flex-wrap: wrap; gap: 40px; }
 
     /* ─── SERVICES ─── */
-    .services-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 32px;
-    }
+    .services-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
     .svc-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 16px;
-      border-radius: 10px;
-      background: var(--charcoal-2);
-      border: 1px solid rgba(255,255,255,.08);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--cream);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 16px; border-radius: 10px;
+      background: var(--charcoal-2); border: 1px solid rgba(255,255,255,.08);
+      font-size: 14px; font-weight: 600; color: var(--cream);
       transition: background .15s, border-color .15s;
     }
-    .svc-pill:hover {
-      background: rgba(138,14,24,.25);
-      border-color: rgba(192,16,32,.4);
-    }
+    .svc-pill:hover { background: rgba(138,14,24,.25); border-color: rgba(192,16,32,.4); }
     .svc-pill svg { width: 17px; height: 17px; color: var(--red-bright); flex-shrink: 0; }
 
     /* ─── REVIEWS ─── */
-    .reviews-grid {
-      display: grid;
-      gap: 16px;
-      margin-top: 32px;
-    }
+    .reviews-grid { display: grid; gap: 16px; margin-top: 32px; }
     .review-card {
+      background: var(--charcoal-2); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px; padding: 22px 24px;
+    }
+    .review-stars { color: #f59e0b; font-size: 16px; letter-spacing: 2px; margin-bottom: 10px; }
+    .review-quote { font-style: italic; font-size: 15px; color: var(--cream-2); line-height: 1.65; margin-bottom: 12px; }
+    .review-author { font-size: 13px; font-weight: 700; color: var(--cream); letter-spacing: .3px; }
+    .reviews-cta { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    /* ─── FAQ ─── */
+    .faq-list { margin-top: 32px; display: flex; flex-direction: column; gap: 4px; }
+    .faq-item {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px; overflow: hidden;
+      background: var(--charcoal-2);
+    }
+    .faq-question {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 18px 22px;
+      background: none; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+      color: var(--cream); text-align: left;
+      transition: color .15s;
+    }
+    .faq-question:hover { color: var(--white); }
+    .faq-question svg {
+      flex-shrink: 0; transition: transform .25s ease;
+      color: var(--red-bright);
+    }
+    .faq-item.open .faq-question svg { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height .3s ease, padding .3s ease;
+      font-size: 15px; color: var(--cream-2); line-height: 1.65;
+      padding: 0 22px;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 22px 18px; }
+
+    /* ─── QUOTE FORM ─── */
+    .quote-form {
+      margin-top: 32px;
       background: var(--charcoal-2);
       border: 1px solid rgba(255,255,255,.07);
-      border-radius: 14px;
-      padding: 22px 24px;
+      border-radius: 16px;
+      padding: clamp(24px, 4vw, 40px);
     }
-    .review-stars {
-      color: #f59e0b;
-      font-size: 16px;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+    .form-grid { display: grid; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      font-weight: 700; color: var(--sub);
     }
-    .review-quote {
-      font-style: italic;
-      font-size: 15px;
-      color: var(--cream-2);
-      line-height: 1.65;
-      margin-bottom: 12px;
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--charcoal-3); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: 12px 14px;
+      font-family: 'Inter', sans-serif; font-size: 15px; color: var(--cream);
+      outline: none; transition: border-color .18s;
+      width: 100%;
     }
-    .review-author {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--cream);
-      letter-spacing: .3px;
-    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--sub); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--red-bright); }
+    .form-group select option { background: var(--charcoal-2); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-note { font-size: 13px; color: var(--sub); margin-top: 8px; }
 
     /* ─── INFO ─── */
-    .info-grid {
-      display: grid;
-      gap: 32px;
-      margin-top: 32px;
-    }
-    .info-row {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .info-grid { display: grid; gap: 32px; margin-top: 32px; }
+    .info-row { display: flex; flex-direction: column; gap: 4px; }
     .info-row .ir-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--sub);
-      font-weight: 700;
+      font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--sub); font-weight: 700;
     }
-    .info-row .ir-value {
-      font-size: clamp(16px, 2.8vw, 20px);
-      font-weight: 700;
-      color: var(--white);
-    }
-    .info-row .ir-value a {
-      color: inherit;
-      text-decoration: none;
-    }
+    .info-row .ir-value { font-size: clamp(16px, 2.8vw, 20px); font-weight: 700; color: var(--white); }
+    .info-row .ir-value a { color: inherit; text-decoration: none; }
     .info-row .ir-value a:hover { color: var(--red-bright); }
-
-    /* ─── MAP ─── */
-    .map-block {
-      margin-top: 32px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.07);
-    }
-    .map-block a { display: block; }
-    .map-block img {
-      width: 100%;
-      display: block;
-      filter: saturate(.9) contrast(1.05);
-    }
+    .map-block { margin-top: 32px; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,.07); }
+    .map-block iframe { display: block; }
 
     /* ─── FOOTER ─── */
     footer {
       border-top: 1px solid rgba(255,255,255,.06);
-      text-align: center;
-      padding: 28px 16px 100px;
-      font-size: 13px;
-      color: var(--sub);
+      text-align: center; padding: 28px 16px 100px;
+      font-size: 13px; color: var(--sub);
     }
     footer a { color: var(--sub); text-decoration: none; }
     footer a:hover { color: var(--cream); }
 
     /* ─── RED RULE ─── */
     .red-rule {
-      width: 100%;
-      height: 4px;
+      width: 100%; height: 4px;
       background: linear-gradient(90deg, var(--red) 0%, var(--red-bright) 50%, transparent 100%);
     }
 
     /* ─── RESPONSIVE ─── */
+    @media (min-width: 640px) {
+      .form-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid .full { grid-column: 1 / -1; }
+    }
     @media (min-width: 720px) {
-      .hero { grid-template-columns: 1fr; }
       .legacy { grid-template-columns: 1fr 1fr; align-items: start; }
       .reviews-grid { grid-template-columns: 1fr 1fr; }
       .info-grid { grid-template-columns: repeat(3, 1fr); }
@@ -475,16 +351,10 @@
       .photo-strip figure:last-child { display: none; }
       .hero-number a { font-size: 36px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; animation: none !important; }
     }
-
-    a:focus-visible {
-      outline: 3px solid var(--red-bright);
-      outline-offset: 3px;
-      border-radius: 6px;
-    }
+    a:focus-visible { outline: 3px solid var(--red-bright); outline-offset: 3px; border-radius: 6px; }
   </style>
 
   <script type="application/ld+json">
@@ -498,13 +368,15 @@
 <body>
 
   <!-- STICKY CALL BAR -->
-  <nav class="sticky-call" aria-label="Call us">
+  <nav class="sticky-call" aria-label="Quick contact">
     <span class="sc-label">Ready to help</span>
     <div class="sc-divider"></div>
     <a href="tel:+13174913393">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" style="display:inline;vertical-align:middle;margin-right:6px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
       (317) 491-3393
     </a>
+    <div class="sc-divider"></div>
+    <a href="sms:+13174913393">Text Us</a>
   </nav>
 
   <!-- HEADER -->
@@ -520,33 +392,35 @@
 
   <!-- HERO -->
   <section class="hero" aria-labelledby="hero-heading">
-    <div>
-      <div class="hero-eyebrow">Indianapolis, Indiana</div>
-      <h1 class="hero-headline" id="hero-heading">
-        Honest Work.<br><em>Since 1994.</em>
-      </h1>
-      <p class="hero-sub">
-        Thirty years of full-service auto repair in Indianapolis. We fix it right the first time and tell you exactly what it costs before we start.
-      </p>
-      <div class="hero-number">
-        <span class="hn-label">Call for a fast quote</span>
-        <a href="tel:+13174913393" aria-label="Call (317) 491-3393">(317) 491-3393</a>
-      </div>
-      <div class="hero-badges">
-        <span class="badge">★★★★★ 5.0 rating</span>
-        <span class="badge">592 customers served</span>
-        <span class="badge">Family owned</span>
-        <span class="badge">Open 24 / 7</span>
-      </div>
-      <div class="hero-cta">
-        <a class="btn-call" href="tel:+13174913393">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
-          Call (317) 491-3393
-        </a>
-        <a class="btn-dir" href="https://www.google.com/maps?q=3249+W+Washington+St,+Indianapolis,+IN+46222" target="_blank" rel="noopener">
-          Get Directions
-        </a>
-      </div>
+    <div class="hero-eyebrow">Indianapolis, Indiana</div>
+    <h1 class="hero-headline" id="hero-heading">
+      Honest Work.<br><em>Since 1994.</em>
+    </h1>
+    <p class="hero-sub">
+      Thirty years of full-service auto repair in Indianapolis. We fix it right the first time and tell you exactly what it costs before we start.
+    </p>
+    <div class="hero-number">
+      <span class="hn-label">Call for a fast quote</span>
+      <a href="tel:+13174913393" aria-label="Call (317) 491-3393">(317) 491-3393</a>
+    </div>
+    <div class="hero-badges">
+      <span class="badge">★★★★★ 5.0 rating</span>
+      <span class="badge">592 customers served</span>
+      <span class="badge">Family owned</span>
+      <span class="badge">Open 24 / 7</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn-call" href="tel:+13174913393">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        Call (317) 491-3393
+      </a>
+      <a class="btn-sms" href="sms:+13174913393">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        Text Us
+      </a>
+      <a class="btn-dir" href="https://www.google.com/maps?q=3249+W+Washington+St,+Indianapolis,+IN+46222" target="_blank" rel="noopener">
+        Get Directions
+      </a>
     </div>
   </section>
 
@@ -595,58 +469,75 @@
       <p class="section-eyebrow">What we do</p>
       <h2 class="section-title" id="services-heading">Full Service. Every Job.</h2>
       <div class="services-grid">
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 15l8-8 4 4-8 8H6v-4z"/></svg>
-          Oil Changes
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5V9"/></svg>
-          Brakes and Rotors
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
-          Tires and Alignments
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h7l2-2h5a2 2 0 012 2v4a2 2 0 01-2 2h-3l-2 2H8l-2-2H4a2 2 0 01-2-2v-2a2 2 0 012-2z"/></svg>
-          Engine Diagnostics
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l-2 8h4l-2 12"/></svg>
-          Electrical
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="8" width="16" height="8" rx="2"/><path d="M21 10v4"/></svg>
-          Batteries and Alternators
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 16h16M6 8l12 8M18 8L6 16"/></svg>
-          Suspension and Steering
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M4 12h16M6 7l3 3M6 17l3-3M18 7l-3 3M18 17l-3-3"/></svg>
-          AC and Heating
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="10" height="4" rx="2"/><path d="M14 12h5"/></svg>
-          Exhaust and Mufflers
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6h12v4H6zM6 14h12v4H6z"/></svg>
-          Transmission Service
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 9h8l3 3-3 3H8L5 12l3-3z"/></svg>
-          Check Engine Light
-        </div>
-        <div class="svc-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
-          Same Day Service
-        </div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 15l8-8 4 4-8 8H6v-4z"/></svg>Oil Changes</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/><path d="M12 4.5V9"/></svg>Brakes and Rotors</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Tires and Alignments</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h7l2-2h5a2 2 0 012 2v4a2 2 0 01-2 2h-3l-2 2H8l-2-2H4a2 2 0 01-2-2v-2a2 2 0 012-2z"/></svg>Engine Diagnostics</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2l-2 8h4l-2 12"/></svg>Electrical</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="8" width="16" height="8" rx="2"/><path d="M21 10v4"/></svg>Batteries and Alternators</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 16h16M6 8l12 8M18 8L6 16"/></svg>Suspension and Steering</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3v18M4 12h16M6 7l3 3M6 17l3-3M18 7l-3 3M18 17l-3-3"/></svg>AC and Heating</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="10" width="10" height="4" rx="2"/><path d="M14 12h5"/></svg>Exhaust and Mufflers</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6h12v4H6zM6 14h12v4H6z"/></svg>Transmission Service</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 9h8l3 3-3 3H8L5 12l3-3z"/></svg>Check Engine Light</div>
+        <div class="svc-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>Same Day Service</div>
       </div>
       <div style="margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;">
         <a class="btn-call" href="tel:+13174913393">Call for a Quote</a>
-        <a class="btn-dir" href="mailto:marys.atransport@gmail.com">Email Us</a>
+        <a class="btn-sms" href="sms:+13174913393">Text Us Instead</a>
+      </div>
+    </section>
+
+    <!-- QUOTE FORM -->
+    <section class="section" aria-labelledby="quote-heading">
+      <p class="section-eyebrow">Get in touch</p>
+      <h2 class="section-title" id="quote-heading">Request a Quote</h2>
+      <p style="margin-top:14px; color:var(--cream-2); font-size:15px; max-width:520px;">
+        Prefer not to call? Fill this out and we'll get back to you fast.
+      </p>
+      <div class="quote-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="f-name">Your name</label>
+            <input type="text" id="f-name" name="name" placeholder="First and last name" autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone number</label>
+            <input type="tel" id="f-phone" name="phone" placeholder="(317) 000-0000" autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label for="f-vehicle">Vehicle</label>
+            <input type="text" id="f-vehicle" name="vehicle" placeholder="Year, make, model" />
+          </div>
+          <div class="form-group">
+            <label for="f-service">Service needed</label>
+            <select id="f-service" name="service">
+              <option value="" disabled selected>Select a service</option>
+              <option>Oil Change</option>
+              <option>Brakes and Rotors</option>
+              <option>Tires and Alignments</option>
+              <option>Engine Diagnostics</option>
+              <option>Electrical</option>
+              <option>Batteries and Alternators</option>
+              <option>Suspension and Steering</option>
+              <option>AC and Heating</option>
+              <option>Exhaust and Mufflers</option>
+              <option>Transmission Service</option>
+              <option>Check Engine Light</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="f-message">Tell us more (optional)</label>
+            <textarea id="f-message" name="message" placeholder="Any details about your vehicle or the issue you're having..."></textarea>
+          </div>
+        </div>
+        <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+          <a class="btn-call" id="submit-quote" href="#" onclick="submitQuote(event)">
+            Send My Request
+          </a>
+          <span class="form-note">Or just call us directly at <a href="tel:+13174913393" style="color:var(--cream-2)">(317) 491-3393</a></span>
+        </div>
       </div>
     </section>
 
@@ -676,6 +567,69 @@
           <div class="review-author">Indianapolis customer</div>
         </div>
       </div>
+      <div class="reviews-cta">
+        <a class="btn-review" href="https://share.google/7dQRxRcXokBQ7mKBr" target="_blank" rel="noopener">
+          ★ Leave Us a Review on Google
+        </a>
+        <span style="font-size:13px; color:var(--sub);">Takes less than a minute and means the world to us.</span>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" aria-labelledby="faq-heading">
+      <p class="section-eyebrow">Common questions</p>
+      <h2 class="section-title" id="faq-heading">Good to Know</h2>
+      <div class="faq-list" role="list">
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false">
+            Do you work on foreign cars?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-answer">Yes. We service all makes and models, domestic and foreign. Toyota, Honda, BMW, Mercedes, Kia, Hyundai, you name it. Bring it in.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false">
+            How long does a brake job take?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-answer">Most brake jobs are done in 1 to 2 hours. If we find anything else that needs attention while we're in there, we'll let you know before touching it.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false">
+            Do you give estimates before starting work?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-answer">Always. We diagnose your vehicle and give you a clear price before any work begins. No surprises on your bill, ever.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false">
+            Are you really open 24 hours?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-answer">For emergencies, yes. If you're stranded or have an urgent situation, call us anytime at (317) 491-3393 and we'll do our best to help.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false">
+            My check engine light is on. What do I do?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-answer">Don't ignore it. Bring your car in and we'll run a diagnostic to find the exact cause. It could be something simple or something that needs attention soon. Either way, you'll know exactly what's going on.</div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false">
+            How do I get a quote?
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq-answer">Call us at (317) 491-3393, text us, or fill out the quote form above. We'll get back to you quickly and coordinate a time to drop off your vehicle.</div>
+        </div>
+
+      </div>
     </section>
 
     <!-- INFO AND MAP -->
@@ -690,8 +644,10 @@
           </span>
         </div>
         <div class="info-row">
-          <span class="ir-label">Phone</span>
-          <span class="ir-value"><a href="tel:+13174913393">(317) 491-3393</a></span>
+          <span class="ir-label">Phone and Text</span>
+          <span class="ir-value">
+            <a href="tel:+13174913393">(317) 491-3393</a>
+          </span>
         </div>
         <div class="info-row">
           <span class="ir-label">Hours</span>
@@ -701,11 +657,8 @@
       <div class="map-block">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3065.0!2d-86.2074!3d39.7684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x886b503a3b4f3b3b%3A0x1f2e3d4c5b6a7e8f!2s3249%20W%20Washington%20St%2C%20Indianapolis%2C%20IN%2046222!5e0!3m2!1sen!2sus!4v1"
-          width="100%"
-          height="380"
-          style="border:0; display:block;"
-          allowfullscreen=""
-          loading="lazy"
+          width="100%" height="380" style="border:0; display:block;"
+          allowfullscreen="" loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
           title="Mary's Automotive location map"
         ></iframe>
@@ -717,6 +670,42 @@
   <footer>
     <p>© 2025 Mary's Automotive &nbsp;·&nbsp; 3249 W Washington St, Indianapolis, IN &nbsp;·&nbsp; <a href="tel:+13174913393">(317) 491-3393</a></p>
   </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(el => {
+          el.classList.remove('open');
+          el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // Quote form submit via mailto
+    function submitQuote(e) {
+      e.preventDefault();
+      const name    = document.getElementById('f-name').value.trim();
+      const phone   = document.getElementById('f-phone').value.trim();
+      const vehicle = document.getElementById('f-vehicle').value.trim();
+      const service = document.getElementById('f-service').value;
+      const message = document.getElementById('f-message').value.trim();
+      if (!name || !phone) {
+        alert('Please enter your name and phone number so we can reach you.');
+        return;
+      }
+      const body = encodeURIComponent(
+        `Name: ${name}\nPhone: ${phone}\nVehicle: ${vehicle}\nService: ${service}\nDetails: ${message}`
+      );
+      window.location.href = `mailto:marys.atransport@gmail.com?subject=Quote Request from ${encodeURIComponent(name)}&body=${body}`;
+    }
+  </script>
 
 </body>
 </html>
