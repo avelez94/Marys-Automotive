@@ -212,7 +212,8 @@
     a:focus-visible { outline: 3px solid var(--red-bright); outline-offset: 3px; border-radius: 6px; }
 
     @media print {
-      body { background: #fff; color: #111; }
+      @page { margin: 0.5in; size: auto; }
+      body { background: #fff; color: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .site-header, .page-eyebrow, .page-title, .btn-row, .toast { display: none !important; }
       #preview-section { display: block !important; }
       .preview-card { box-shadow: none; border: none; padding: 0; border-radius: 0; }
@@ -587,7 +588,7 @@ Thank you for choosing Mary's Automotive!
 3249 W Washington St, Indianapolis, IN 46222
 marysautomotive.com`
       );
-      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&su=${subject}&body=${body}`, '_blank');
       showToast();
     }
 
