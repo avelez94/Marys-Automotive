@@ -53,7 +53,7 @@
     .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--white); line-height: 1.1; letter-spacing: -.5px; margin-bottom: 32px; }
 
     /* ─── FORM CARD ─── */
-    .form-card { background: var(--charcoal-2); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: clamp(20px, 4vw, 36px); margin-bottom: 20px; }
+    .form-card { background: var(--charcoal-2); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: clamp(16px, 4vw, 36px); margin-bottom: 20px; overflow: hidden; }
     .form-section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--sub); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.07); }
     .form-grid { display: grid; gap: 14px; margin-bottom: 24px; }
     .form-group { display: flex; flex-direction: column; gap: 5px; }
@@ -198,14 +198,16 @@
     .toast.show { transform: translateY(0); opacity: 1; }
 
     @media (min-width: 540px) { .form-grid.two-col { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 539px) { .form-grid.two-col { grid-template-columns: 1fr; } }
     @media (max-width: 560px) {
-      .line-items-header { grid-template-columns: 1fr 80px 80px 32px; }
-      .line-item { grid-template-columns: 1fr 80px 80px 32px; }
+      .line-items-header { grid-template-columns: 1fr 72px 72px 32px; gap: 6px; }
+      .line-item { grid-template-columns: 1fr 72px 72px 32px; gap: 6px; }
       .warranty-grid { grid-template-columns: 1fr; }
+      .form-group input[type="date"] { font-size: 13px; padding: 11px 8px; }
     }
     @media (max-width: 420px) {
-      .line-items-header { grid-template-columns: 1fr 70px 36px; }
-      .line-item { grid-template-columns: 1fr 70px 36px; }
+      .line-items-header { grid-template-columns: 1fr 64px 32px; gap: 5px; }
+      .line-item { grid-template-columns: 1fr 64px 32px; gap: 5px; }
       .line-item .labor-col { display: none; }
       .line-items-header .labor-hdr { display: none; }
     }
