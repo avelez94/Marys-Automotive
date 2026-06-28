@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice Generator | Mary's Automotive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red:       #8a0e18;
+      --red-bright:#c01020;
+      --red-deep:  #5c0810;
+      --charcoal:  #111418;
+      --charcoal-2:#1c2026;
+      --charcoal-3:#242930;
+      --cream:     #f0ebe3;
+      --cream-2:   #e0d8cc;
+      --sub:       #7a8290;
+      --white:     #ffffff;
+      --green:     #16a34a;
+      --maxw:      780px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--charcoal);
+      color: var(--cream);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      background: var(--charcoal);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(16px, 4vw, 40px); height: 60px;
+    }
+    .wordmark { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 700; color: var(--cream); }
+    .wordmark span { color: var(--red-bright); }
+    .back-link {
+      font-size: 14px; font-weight: 600; color: var(--sub);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: color .15s;
+    }
+    .back-link:hover { color: var(--cream); }
+
+    /* ─── PAGE ─── */
+    .page { max-width: var(--maxw); margin: 0 auto; padding: clamp(32px, 6vw, 56px) clamp(16px, 4vw, 32px) 100px; }
+    .page-eyebrow { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red-bright); font-weight: 700; margin-bottom: 10px; }
+    .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--white); line-height: 1.1; letter-spacing: -.5px; margin-bottom: 32px; }
+
+    /* ─── FORM CARD ─── */
+    .form-card { background: var(--charcoal-2); border: 1px solid rgba(255,255,255,.07); border-radius: 16px; padding: clamp(20px, 4vw, 36px); margin-bottom: 20px; }
+    .form-section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--sub); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .form-grid { display: grid; gap: 14px; margin-bottom: 24px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group label { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: var(--sub); }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--charcoal-3); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: 11px 13px;
+      font-family: 'Inter', sans-serif; font-size: 15px; color: var(--cream);
+      outline: none; transition: border-color .18s; width: 100%;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--sub); }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--red-bright); }
+    .form-group select option { background: var(--charcoal-2); }
+
+    /* ─── LINE ITEMS ─── */
+    .line-items-header {
+      display: grid; grid-template-columns: 1fr 100px 100px 36px;
+      gap: 8px; padding: 0 0 8px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      margin-bottom: 10px;
+    }
+    .line-items-header span { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: var(--sub); }
+    .line-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .line-item { display: grid; grid-template-columns: 1fr 100px 100px 36px; gap: 8px; align-items: center; }
+    .line-item input { margin: 0; padding: 10px 11px; font-size: 14px; }
+    .line-row-total { font-size: 14px; font-weight: 700; color: var(--cream-2); text-align: right; padding-right: 4px; min-width: 80px; }
+    .remove-btn {
+      background: none; border: none; cursor: pointer; color: var(--sub);
+      padding: 6px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+      transition: color .15s, background .15s;
+    }
+    .remove-btn:hover { color: #ef4444; background: rgba(239,68,68,.1); }
+    .add-line-btn {
+      background: none; border: 1.5px dashed rgba(255,255,255,.15);
+      color: var(--sub); font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600; padding: 10px;
+      border-radius: 8px; cursor: pointer; width: 100%;
+      transition: border-color .15s, color .15s;
+    }
+    .add-line-btn:hover { border-color: var(--red-bright); color: var(--cream); }
+
+    /* ─── TOTALS ─── */
+    .totals-block { margin-top: 16px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 14px; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+    .totals-row { display: flex; gap: 24px; align-items: center; }
+    .totals-label { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: var(--sub); min-width: 120px; text-align: right; }
+    .totals-val { font-size: 15px; font-weight: 700; color: var(--cream); min-width: 80px; text-align: right; }
+    .totals-grand .totals-label { color: var(--cream-2); font-size: 13px; }
+    .totals-grand .totals-val { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; color: var(--white); }
+
+    /* ─── WARRANTY ─── */
+    .warranty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .warranty-inline { display: flex; align-items: center; gap: 10px; }
+    .warranty-inline label { font-size: 13px; font-weight: 600; color: var(--cream-2); white-space: nowrap; }
+    .warranty-inline input { width: 80px; padding: 9px 11px; font-size: 14px; text-align: center; }
+    .warranty-inline span { font-size: 13px; color: var(--sub); }
+
+    /* ─── BUTTONS ─── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--red); color: #fff; font-weight: 700; font-size: 15px;
+      padding: 14px 24px; border-radius: 10px; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background .18s, transform .12s;
+      box-shadow: 0 8px 24px rgba(138,14,24,.4);
+    }
+    .btn-primary:hover { background: var(--red-bright); transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: transparent; color: var(--cream-2); font-weight: 600; font-size: 15px;
+      padding: 14px 22px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,.15); cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: border-color .18s, color .18s;
+    }
+    .btn-ghost:hover { border-color: var(--cream-2); color: var(--white); }
+    .btn-green {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--green); color: #fff; font-weight: 700; font-size: 15px;
+      padding: 14px 24px; border-radius: 10px; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background .18s;
+    }
+    .btn-green:hover { background: #15803d; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+
+    /* ─── PREVIEW ─── */
+    #preview-section { display: none; }
+    .preview-card {
+      background: var(--white); color: #1a1d21;
+      border-radius: 16px; padding: clamp(28px, 5vw, 48px); margin-bottom: 28px;
+    }
+    .inv-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+    .inv-shop-name { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: #111; }
+    .inv-shop-name span { color: var(--red); }
+    .inv-shop-info { font-size: 12px; color: #6b7280; margin-top: 4px; line-height: 1.7; }
+    .inv-meta { text-align: right; }
+    .inv-label-sm { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #9ca3af; }
+    .inv-number { font-family: 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--red); }
+    .inv-date { font-size: 13px; color: #374151; margin-top: 4px; font-weight: 500; }
+    .inv-divider { border: none; border-top: 2px solid #111; margin: 0 0 22px; }
+    .inv-section-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: #9ca3af; margin-bottom: 6px; }
+    .inv-customer-name { font-size: 17px; font-weight: 700; color: #111; }
+    .inv-customer-sub { font-size: 13px; color: #6b7280; margin-top: 2px; }
+    .inv-vehicle { font-size: 13px; color: #374151; margin-top: 2px; font-weight: 600; }
+
+    /* services table */
+    .inv-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 14px; }
+    .inv-table thead tr { background: #f3f4f6; }
+    .inv-table th { padding: 10px 12px; text-align: left; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #6b7280; }
+    .inv-table th.right { text-align: right; }
+    .inv-table td { padding: 12px 12px; border-top: 1px solid #e5e7eb; color: #111; vertical-align: top; }
+    .inv-table td.right { text-align: right; font-weight: 700; }
+    .inv-table td.muted { color: #6b7280; font-size: 13px; }
+
+    .inv-totals { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; margin-top: 4px; }
+    .inv-totals-row { display: flex; gap: 32px; }
+    .inv-totals-label { font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; min-width: 120px; text-align: right; }
+    .inv-totals-val { font-size: 14px; font-weight: 700; color: #111; min-width: 80px; text-align: right; }
+    .inv-totals-grand { border-top: 2px solid #111; margin-top: 8px; padding-top: 10px; }
+    .inv-totals-grand .inv-totals-label { color: #111; font-size: 13px; }
+    .inv-totals-grand .inv-totals-val { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; color: #111; }
+
+    /* terms */
+    .inv-terms {
+      margin-top: 28px; padding: 20px;
+      background: #f9fafb; border-radius: 8px;
+      font-size: 11.5px; color: #4b5563; line-height: 1.75;
+    }
+    .inv-terms-title { font-size: 12px; font-weight: 700; color: #111; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+    .inv-terms h4 { font-size: 11.5px; font-weight: 700; color: #374151; margin: 10px 0 3px; }
+    .inv-terms ul { padding-left: 16px; }
+    .inv-terms ul li { margin-bottom: 2px; }
+
+    .inv-footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #9ca3af; text-align: center; line-height: 1.7; }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; top: 20px; right: 20px; z-index: 200;
+      background: var(--green); color: #fff; padding: 14px 20px; border-radius: 10px;
+      font-size: 14px; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      transform: translateY(-80px); opacity: 0; transition: transform .3s ease, opacity .3s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (min-width: 540px) { .form-grid.two-col { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) {
+      .line-items-header { grid-template-columns: 1fr 80px 80px 32px; }
+      .line-item { grid-template-columns: 1fr 80px 80px 32px; }
+      .warranty-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      .line-items-header { grid-template-columns: 1fr 70px 36px; }
+      .line-item { grid-template-columns: 1fr 70px 36px; }
+      .line-item .labor-col { display: none; }
+      .line-items-header .labor-hdr { display: none; }
+    }
+    a:focus-visible { outline: 3px solid var(--red-bright); outline-offset: 3px; border-radius: 6px; }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      .site-header, .page-eyebrow, .page-title, .btn-row, .toast { display: none !important; }
+      #preview-section { display: block !important; }
+      .preview-card { box-shadow: none; border: none; padding: 0; border-radius: 0; }
+      .page { padding: 0; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toast" id="toast">Invoice ready to send!</div>
+
+  <header class="site-header">
+    <div class="wordmark">Mary's <span>Automotive</span></div>
+    <a class="back-link" href="/">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to site
+    </a>
+  </header>
+
+  <div class="page">
+
+    <!-- ─── FORM ─── -->
+    <div id="form-section">
+      <p class="page-eyebrow">Mary's Automotive</p>
+      <h1 class="page-title">Create an Invoice</h1>
+
+      <!-- Customer Info -->
+      <div class="form-card">
+        <p class="form-section-label">Customer Information</p>
+        <div class="form-grid two-col">
+          <div class="form-group">
+            <label for="c-name">Customer Name</label>
+            <input type="text" id="c-name" placeholder="Full name" />
+          </div>
+          <div class="form-group">
+            <label for="c-phone">Phone Number</label>
+            <input type="tel" id="c-phone" placeholder="(317) 000-0000" />
+          </div>
+          <div class="form-group">
+            <label for="c-vehicle">Vehicle</label>
+            <input type="text" id="c-vehicle" placeholder="2018 Toyota Camry" />
+          </div>
+          <div class="form-group">
+            <label for="c-date">Invoice Date</label>
+            <input type="date" id="c-date" />
+          </div>
+          <div class="form-group">
+            <label for="c-odometer">Odometer Reading</label>
+            <input type="text" id="c-odometer" placeholder="e.g. 87,432 miles" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="form-card">
+        <p class="form-section-label">Services and Charges</p>
+        <div class="line-items-header">
+          <span>Service Description</span>
+          <span>Parts ($)</span>
+          <span class="labor-hdr">Labor ($)</span>
+          <span></span>
+        </div>
+        <div class="line-items" id="line-items"></div>
+        <button class="add-line-btn" onclick="addLine()">+ Add service</button>
+
+        <div class="totals-block">
+          <div class="totals-row">
+            <span class="totals-label">Parts Total</span>
+            <span class="totals-val" id="parts-total">$0.00</span>
+          </div>
+          <div class="totals-row">
+            <span class="totals-label">Labor Total</span>
+            <span class="totals-val" id="labor-total">$0.00</span>
+          </div>
+          <div class="totals-row totals-grand">
+            <span class="totals-label">Grand Total</span>
+            <span class="totals-val" id="grand-total">$0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warranty -->
+      <div class="form-card">
+        <p class="form-section-label">Warranty Terms</p>
+        <div class="warranty-grid">
+          <div class="warranty-inline">
+            <label>Parts warranty:</label>
+            <input type="number" id="w-parts" placeholder="90" min="0" />
+            <span>days</span>
+          </div>
+          <div class="warranty-inline">
+            <label>Labor warranty:</label>
+            <input type="number" id="w-labor" placeholder="30" min="0" />
+            <span>days</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="generatePreview()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          Preview Invoice
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── PREVIEW ─── -->
+    <div id="preview-section">
+      <p class="page-eyebrow">Review before sending</p>
+      <h1 class="page-title">Invoice Preview</h1>
+      <div class="preview-card" id="invoice-preview"></div>
+      <div class="btn-row">
+        <button class="btn-green" onclick="sendEmail()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          Send via Email
+        </button>
+        <button class="btn-ghost" onclick="printInvoice()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print
+        </button>
+        <button class="btn-ghost" onclick="goBack()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 17l-5-5 5-5M18 17l-5-5 5-5"/></svg>
+          Edit Invoice
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Set today
+    const dateInput = document.getElementById('c-date');
+    dateInput.value = new Date().toISOString().split('T')[0];
+
+
+    // Init one line
+    addLine();
+
+    function addLine() {
+      const container = document.getElementById('line-items');
+      const div = document.createElement('div');
+      div.className = 'line-item';
+      div.innerHTML = `
+        <input type="text" placeholder="e.g. Brake pad replacement" class="svc-name" oninput="updateTotals()" />
+        <input type="number" placeholder="0.00" class="parts-price" min="0" step="0.01" oninput="updateTotals()" />
+        <input type="number" placeholder="0.00" class="labor-price labor-col" min="0" step="0.01" oninput="updateTotals()" />
+        <button class="remove-btn" onclick="removeLine(this)" aria-label="Remove">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>`;
+      container.appendChild(div);
+      div.querySelector('.svc-name').focus();
+    }
+
+    function removeLine(btn) {
+      const items = document.querySelectorAll('.line-item');
+      if (items.length === 1) return;
+      btn.closest('.line-item').remove();
+      updateTotals();
+    }
+
+    function updateTotals() {
+      let parts = 0, labor = 0;
+      document.querySelectorAll('.line-item').forEach(row => {
+        parts += parseFloat(row.querySelector('.parts-price').value) || 0;
+        labor += parseFloat(row.querySelector('.labor-price').value) || 0;
+      });
+      document.getElementById('parts-total').textContent = '$' + parts.toFixed(2);
+      document.getElementById('labor-total').textContent = '$' + labor.toFixed(2);
+      document.getElementById('grand-total').textContent = '$' + (parts + labor).toFixed(2);
+    }
+
+    function getFormData() {
+      const lines = [];
+      document.querySelectorAll('.line-item').forEach(row => {
+        const svc   = row.querySelector('.svc-name').value.trim();
+        const parts = parseFloat(row.querySelector('.parts-price').value) || 0;
+        const labor = parseFloat(row.querySelector('.labor-price').value) || 0;
+        if (svc || parts || labor) lines.push({ svc: svc || 'Service', parts, labor, total: parts + labor });
+      });
+      const partsTotal = lines.reduce((s, l) => s + l.parts, 0);
+      const laborTotal = lines.reduce((s, l) => s + l.labor, 0);
+      const grandTotal = partsTotal + laborTotal;
+      return {
+        name:    document.getElementById('c-name').value.trim(),
+        phone:   document.getElementById('c-phone').value.trim(),
+        vehicle: document.getElementById('c-vehicle').value.trim(),
+        odometer: document.getElementById('c-odometer').value.trim(),
+        date:    document.getElementById('c-date').value,
+        wParts:  document.getElementById('w-parts').value || '___',
+        wLabor:  document.getElementById('w-labor').value || '___',
+        lines, partsTotal, laborTotal, grandTotal
+      };
+    }
+
+    function formatDate(val) {
+      if (!val) return '';
+      const [y, m, d] = val.split('-');
+      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
+    }
+
+    function generatePreview() {
+      const d = getFormData();
+      if (!d.name) { alert('Please enter the customer name.'); return; }
+      if (d.lines.length === 0) { alert('Please add at least one service.'); return; }
+
+      const rowsHTML = d.lines.map(l => `
+        <tr>
+          <td>${l.svc}</td>
+          <td class="right">$${l.parts.toFixed(2)}</td>
+          <td class="right labor-col">$${l.labor.toFixed(2)}</td>
+          <td class="right">$${l.total.toFixed(2)}</td>
+        </tr>`).join('');
+
+      const termsHTML = buildTerms(d.wParts, d.wLabor, formatDate(d.date));
+
+      document.getElementById('invoice-preview').innerHTML = `
+        <div class="inv-header">
+          <div>
+            <div class="inv-shop-name">Mary's <span>Automotive</span></div>
+            <div class="inv-shop-info">
+              3249 W Washington St, Indianapolis, IN 46222<br>
+              (317) 491-3393 &nbsp;·&nbsp; marysautomotive.com
+            </div>
+          </div>
+          <div class="inv-meta">
+            <div class="inv-label-sm">Date</div>
+            <div class="inv-date" style="font-size:16px;font-weight:700;color:#374151;">${formatDate(d.date)}</div>
+          </div>
+        </div>
+
+        <hr class="inv-divider" />
+
+        <div>
+          <div class="inv-section-title">Bill To</div>
+          <div class="inv-customer-name">${d.name}</div>
+          ${d.phone   ? `<div class="inv-customer-sub">${d.phone}</div>` : ''}
+          ${d.vehicle   ? `<div class="inv-vehicle">${d.vehicle}</div>` : ''}
+          ${d.odometer  ? `<div class="inv-customer-sub">Odometer: ${d.odometer}</div>` : ''}
+        </div>
+
+        <table class="inv-table">
+          <thead>
+            <tr>
+              <th>Service</th>
+              <th class="right">Parts</th>
+              <th class="right labor-col">Labor</th>
+              <th class="right">Line Total</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHTML}</tbody>
+        </table>
+
+        <div class="inv-totals">
+          <div class="inv-totals-row">
+            <span class="inv-totals-label">Parts Total</span>
+            <span class="inv-totals-val">$${d.partsTotal.toFixed(2)}</span>
+          </div>
+          <div class="inv-totals-row">
+            <span class="inv-totals-label">Labor Total</span>
+            <span class="inv-totals-val">$${d.laborTotal.toFixed(2)}</span>
+          </div>
+          <div class="inv-totals-row inv-totals-grand">
+            <span class="inv-totals-label">Grand Total</span>
+            <span class="inv-totals-val">$${d.grandTotal.toFixed(2)}</span>
+          </div>
+        </div>
+
+        ${termsHTML}
+
+        <div class="inv-footer">
+          Thank you for your business!<br>
+          Should you have any inquiries concerning this invoice, please contact us at (317) 491-3393.
+        </div>
+      `;
+
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('preview-section').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function buildTerms(wParts, wLabor, dateStr) {
+      return `
+        <div class="inv-terms">
+          <div class="inv-terms-title">Terms and Conditions</div>
+
+          <h4>Warranty Period</h4>
+          This labor warranty is valid for ${wLabor} days from the date of service (${dateStr}). This parts warranty is valid for ${wParts} days from the date of service (${dateStr}).
+
+          <h4>Coverage Scope</h4>
+          This warranty applies to any defects in materials or workmanship that arise during normal use of the serviced vehicle.
+
+          <h4>Exclusions</h4>
+          This warranty does not cover:
+          <ul>
+            <li>Damage resulting from accidents, misuse, or neglect, including running vehicle hot.</li>
+            <li>Normal wear and tear.</li>
+            <li>Parts not supplied by Mary's Auto Transport.</li>
+            <li>Any repairs or alterations made by parties other than Mary's Auto Transport.</li>
+          </ul>
+
+          <h4>Claims Procedure</h4>
+          <ul>
+            <li>To make a warranty claim, the customer must present the original invoice or proof of service completion and copy of routine maintenance such as oil changes.</li>
+            <li>Customers must notify Mary's Auto Transport of any potential warranty claims within seven (7) days of discovering the issue.</li>
+            <li>Mary's Auto Transport reserves the right to inspect the vehicle and/or parts in question to verify the warranty claim.</li>
+          </ul>
+
+          <h4>Resolution</h4>
+          <ul>
+            <li>If a defect covered by this warranty is found, Mary's Auto Transport will, at its discretion, repair or replace the defective part(s) or correct the faulty workmanship at no additional cost to the customer.</li>
+            <li>If repair or replacement is not feasible, Mary's Auto Transport may provide a refund for the original cost of the service.</li>
+          </ul>
+
+          <h4>Limitations of Liability</h4>
+          <ul>
+            <li>Mary's Auto Transport shall not be liable for any indirect, incidental, special, or consequential damages arising out of or in connection with this warranty.</li>
+            <li>Mary's Auto Transport's liability under this warranty is limited solely to the repair, replacement, or refund as outlined in this agreement.</li>
+          </ul>
+
+          <h4>Transferability</h4>
+          This warranty is non-transferable and applies only to the original customer who received the service from Mary's Auto Transport.
+
+          <h4>Voiding of Warranty</h4>
+          This warranty will be void if:
+          <ul>
+            <li>The serviced vehicle is used for racing, competition, or other non-standard purposes.</li>
+            <li>The vehicle's odometer has been tampered with.</li>
+            <li>The customer fails to follow proper maintenance and care instructions provided by Mary's Auto Transport.</li>
+          </ul>
+
+          <h4>Governing Law</h4>
+          This warranty shall be governed by the laws of Indiana, and any disputes arising under or in connection with this warranty shall be resolved exclusively in the courts of Indiana.
+
+          <p style="margin-top:12px; font-style:italic;">By accepting services from Mary's Auto Transport, the customer acknowledges and agrees to the terms and conditions of this warranty.</p>
+        </div>`;
+    }
+
+    function goBack() {
+      document.getElementById('preview-section').style.display = 'none';
+      document.getElementById('form-section').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function sendEmail() {
+      const d = getFormData();
+      const subject = encodeURIComponent(`Invoice from Mary's Automotive`);
+      const lines = d.lines.map(l =>
+        `  ${l.svc}\n    Parts: $${l.parts.toFixed(2)}  |  Labor: $${l.labor.toFixed(2)}  |  Line Total: $${l.total.toFixed(2)}`
+      ).join('\n');
+      const body = encodeURIComponent(
+`Hi ${d.name},
+
+Please find your invoice details below.
+
+Invoice #${invoiceNum}
+Date: ${formatDate(d.date)}
+Vehicle: ${d.vehicle || 'N/A'}
+Odometer: ${d.odometer || 'N/A'}
+
+Services:
+${lines}
+
+Parts Total:  $${d.partsTotal.toFixed(2)}
+Labor Total:  $${d.laborTotal.toFixed(2)}
+Grand Total:  $${d.grandTotal.toFixed(2)}
+
+Warranty: Parts ${d.wParts} days | Labor ${d.wLabor} days from date of service.
+
+Thank you for choosing Mary's Automotive!
+(317) 491-3393
+3249 W Washington St, Indianapolis, IN 46222
+marysautomotive.com`
+      );
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      showToast();
+    }
+
+    function printInvoice() { window.print(); }
+
+    function showToast() {
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+  </script>
+
+</body>
+</html>
