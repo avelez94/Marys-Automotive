@@ -169,7 +169,11 @@ function buildInvoiceHTML(data) {
 
 module.exports = async (req, res) => {
   // CORS headers so GitHub Pages can call this API
-  res.setHeader('Access-Control-Allow-Origin', 'https://marysautomotive.com');
+  const allowedOrigins = ['https://marysautomotive.com', 'https://marys-automotive.vercel.app'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
