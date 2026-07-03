@@ -266,6 +266,10 @@
             <label for="c-odometer">Odometer Reading</label>
             <input type="text" id="c-odometer" placeholder="e.g. 87,432 miles" />
           </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <label for="c-email">Customer Email</label>
+            <input type="email" id="c-email" placeholder="customer@email.com" />
+          </div>
         </div>
       </div>
 
@@ -328,10 +332,9 @@
       <h1 class="page-title">Invoice Preview</h1>
       <div class="preview-card" id="invoice-preview"></div>
       <div class="btn-row">
-        <a id="gmail-link" href="#" target="_blank" rel="noopener" style="display:none"></a>
         <button class="btn-green" onclick="sendEmail()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
-          Send via Gmail
+          Send Invoice
         </button>
         <button class="btn-ghost" onclick="printInvoice()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -400,11 +403,12 @@
       const laborTotal = lines.reduce((s, l) => s + l.labor, 0);
       const grandTotal = partsTotal + laborTotal;
       return {
-        name:    document.getElementById('c-name').value.trim(),
-        phone:   document.getElementById('c-phone').value.trim(),
-        vehicle: document.getElementById('c-vehicle').value.trim(),
+        name:     document.getElementById('c-name').value.trim(),
+        phone:    document.getElementById('c-phone').value.trim(),
+        vehicle:  document.getElementById('c-vehicle').value.trim(),
         odometer: document.getElementById('c-odometer').value.trim(),
-        date:    document.getElementById('c-date').value,
+        customerEmail: document.getElementById('c-email').value.trim(),
+        date:     document.getElementById('c-date').value,
         wParts:  document.getElementById('w-parts').value || '___',
         wLabor:  document.getElementById('w-labor').value || '___',
         lines, partsTotal, laborTotal, grandTotal
@@ -561,39 +565,40 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function sendEmail() {
+    async function sendEmail() {
       const d = getFormData();
-      const subject = encodeURIComponent(`Invoice from Mary's Automotive`);
-      const lines = d.lines.map(l =>
-        `  ${l.svc}\n    Parts: $${l.parts.toFixed(2)}  |  Labor: $${l.labor.toFixed(2)}  |  Line Total: $${l.total.toFixed(2)}`
-      ).join('\n');
-      const body = encodeURIComponent(
-`Hi ${d.name},
+      if (!d.customerEmail) {
+        alert('Please enter the customer email address.');
+        return;
+      }
 
-Please find your invoice details below.
+      const btn = document.querySelector('.btn-green');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
 
-Date: ${formatDate(d.date)}
-Vehicle: ${d.vehicle || 'N/A'}
-Odometer: ${d.odometer || 'N/A'}
+      try {
+        const res = await fetch('https://marys-invoice-api.vercel.app/api/send-invoice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(d)
+        });
 
-Services:
-${lines}
+        const result = await res.json();
 
-Parts Total:  $${d.partsTotal.toFixed(2)}
-Labor Total:  $${d.laborTotal.toFixed(2)}
-Grand Total:  $${d.grandTotal.toFixed(2)}
-
-Warranty: Parts ${d.wParts} days | Labor ${d.wLabor} days from date of service.
-
-Thank you for choosing Mary's Automotive!
-(317) 491-3393
-3249 W Washington St, Indianapolis, IN 46222
-marysautomotive.com`
-      );
-      const link = document.getElementById('gmail-link');
-      link.href = `https://mail.google.com/mail/?view=cm&fs=1&su=${subject}&body=${body}`;
-      link.click();
-      showToast();
+        if (res.ok && result.success) {
+          btn.textContent = 'Sent!';
+          btn.style.background = '#16a34a';
+          showToast();
+        } else {
+          alert(result.error || 'Something went wrong. Please try again.');
+          btn.textContent = 'Send Invoice';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        alert('Could not connect. Check your internet and try again.');
+        btn.textContent = 'Send Invoice';
+        btn.disabled = false;
+      }
     }
 
     function printInvoice() { window.print(); }
