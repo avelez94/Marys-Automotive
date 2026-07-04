@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@sendgrid/mail": "^8.1.0",
-    "puppeteer-core": "^21.0.0",
-    "@sparticuz/chromium": "^119.0.0"
+    "@sendgrid/mail": "^8.1.0"
   }
 }
