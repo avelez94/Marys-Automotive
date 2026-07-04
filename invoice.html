@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Invoice Generator | Mary's Automotive</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -573,14 +575,18 @@
       }
 
       const btn = document.querySelector('.btn-green');
-      btn.textContent = 'Sending...';
+      btn.textContent = 'Generating PDF...';
       btn.disabled = true;
 
       try {
+        const pdfBase64 = generatePDF(d);
+
+        btn.textContent = 'Sending...';
+
         const res = await fetch('https://marys-automotive.vercel.app/api/send-invoice', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(d)
+          body: JSON.stringify({ name: d.name, customerEmail: d.customerEmail, pdfBase64 })
         });
 
         const result = await res.json();
@@ -595,10 +601,192 @@
           btn.disabled = false;
         }
       } catch (err) {
+        console.error(err);
         alert('Could not connect. Check your internet and try again.');
         btn.textContent = 'Send Invoice';
         btn.disabled = false;
       }
+    }
+
+    function generatePDF(d) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+      const red = [138, 14, 24];
+      const black = [17, 20, 24];
+      const gray = [107, 114, 128];
+      const lightGray = [243, 244, 246];
+      const margin = 48;
+      let y = 48;
+
+      // Shop name
+      doc.setFontSize(20);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...black);
+      doc.text("Mary's ", margin, y);
+      const maryWidth = doc.getTextWidth("Mary's ");
+      doc.setTextColor(...red);
+      doc.text('Automotive', margin + maryWidth, y);
+
+      // Shop info
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...gray);
+      doc.text('3249 W Washington St, Indianapolis, IN 46222', margin, y + 16);
+      doc.text('(317) 491-3393   marysautomotive.com', margin, y + 28);
+
+      // Date on right
+      doc.setFontSize(10);
+      doc.setTextColor(...gray);
+      doc.text('DATE', 500, y, { align: 'right' });
+      doc.setFontSize(13);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...black);
+      doc.text(formatDate(d.date), 560, y, { align: 'right' });
+
+      // Divider
+      y += 48;
+      doc.setDrawColor(...black);
+      doc.setLineWidth(1.5);
+      doc.line(margin, y, 560, y);
+      y += 18;
+
+      // Bill To
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...gray);
+      doc.text('BILL TO', margin, y);
+      y += 14;
+      doc.setFontSize(14);
+      doc.setTextColor(...black);
+      doc.text(d.name, margin, y);
+      y += 14;
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(...gray);
+      if (d.phone)    { doc.text(d.phone, margin, y); y += 13; }
+      if (d.vehicle)  { doc.setTextColor(...black); doc.setFont('helvetica','bold'); doc.text(d.vehicle, margin, y); doc.setFont('helvetica','normal'); doc.setTextColor(...gray); y += 13; }
+      if (d.odometer) { doc.text('Odometer: ' + d.odometer, margin, y); y += 13; }
+      y += 10;
+
+      // Services table
+      doc.autoTable({
+        startY: y,
+        margin: { left: margin, right: margin },
+        head: [['Service', 'Parts', 'Labor', 'Line Total']],
+        body: d.lines.map(l => [
+          l.svc,
+          '$' + l.parts.toFixed(2),
+          '$' + l.labor.toFixed(2),
+          '$' + l.total.toFixed(2)
+        ]),
+        headStyles: {
+          fillColor: lightGray,
+          textColor: gray,
+          fontStyle: 'bold',
+          fontSize: 9,
+          halign: 'left'
+        },
+        columnStyles: {
+          0: { halign: 'left' },
+          1: { halign: 'right' },
+          2: { halign: 'right' },
+          3: { halign: 'right', fontStyle: 'bold' }
+        },
+        bodyStyles: { fontSize: 11, textColor: black },
+        alternateRowStyles: { fillColor: [249, 250, 251] },
+        styles: { cellPadding: 8 }
+      });
+
+      y = doc.lastAutoTable.finalY + 16;
+
+      // Totals
+      const totalsX = 560;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...gray);
+      doc.text('PARTS TOTAL', totalsX - 90, y, { align: 'right' });
+      doc.setTextColor(...black);
+      doc.text('$' + d.partsTotal.toFixed(2), totalsX, y, { align: 'right' });
+      y += 16;
+      doc.setTextColor(...gray);
+      doc.text('LABOR TOTAL', totalsX - 90, y, { align: 'right' });
+      doc.setTextColor(...black);
+      doc.text('$' + d.laborTotal.toFixed(2), totalsX, y, { align: 'right' });
+      y += 10;
+      doc.setDrawColor(...black);
+      doc.setLineWidth(1.5);
+      doc.line(totalsX - 160, y, totalsX, y);
+      y += 14;
+      doc.setFontSize(13);
+      doc.setTextColor(...gray);
+      doc.text('GRAND TOTAL', totalsX - 90, y, { align: 'right' });
+      doc.setTextColor(...black);
+      doc.setFontSize(18);
+      doc.text('$' + d.grandTotal.toFixed(2), totalsX, y, { align: 'right' });
+      y += 28;
+
+      // Terms
+      doc.setFillColor(249, 250, 251);
+      const termsStartY = y;
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(...black);
+      doc.text('TERMS AND CONDITIONS', margin, y + 14);
+      y += 28;
+
+      const terms = [
+        ['Warranty Period', `This labor warranty is valid for ${d.wLabor} days from the date of service (${formatDate(d.date)}). This parts warranty is valid for ${d.wParts} days from the date of service (${formatDate(d.date)}).`],
+        ['Coverage Scope', 'This warranty applies to any defects in materials or workmanship that arise during normal use of the serviced vehicle.'],
+        ['Exclusions', 'This warranty does not cover damage from accidents, misuse, or neglect including running vehicle hot; normal wear and tear; parts not supplied by Mary\'s Auto Transport; or repairs made by parties other than Mary\'s Auto Transport.'],
+        ['Claims Procedure', 'Customer must present original invoice and proof of routine maintenance. Claims must be reported within 7 days of discovering the issue. Mary\'s Auto Transport reserves the right to inspect the vehicle to verify the claim.'],
+        ['Resolution', 'If a covered defect is found, Mary\'s Auto Transport will repair or replace the defective part(s) or correct faulty workmanship at no additional cost. If repair or replacement is not feasible, a refund for the original cost may be provided.'],
+        ['Limitations', 'Mary\'s Auto Transport shall not be liable for any indirect, incidental, special, or consequential damages. Liability is limited solely to repair, replacement, or refund as outlined in this agreement.'],
+        ['Transferability', 'This warranty is non-transferable and applies only to the original customer who received the service.'],
+        ['Voiding', 'This warranty will be void if the vehicle is used for racing or competition; if the odometer has been tampered with; or if the customer fails to follow proper maintenance instructions.'],
+        ['Governing Law', 'This warranty shall be governed by the laws of Indiana. Any disputes shall be resolved exclusively in the courts of Indiana.']
+      ];
+
+      const pageWidth = 560;
+      const textWidth = pageWidth - margin - 16;
+
+      terms.forEach(([title, body]) => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        doc.setTextColor(...black);
+        doc.text(title, margin + 8, y);
+        y += 11;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...gray);
+        const lines = doc.splitTextToSize(body, textWidth);
+        doc.text(lines, margin + 8, y);
+        y += lines.length * 11 + 4;
+
+        if (y > 720) {
+          doc.addPage();
+          y = 48;
+        }
+      });
+
+      doc.setDrawColor(229, 231, 235);
+      doc.setLineWidth(1);
+      doc.rect(margin, termsStartY, pageWidth - margin, y - termsStartY + 8);
+
+      y += 20;
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(9);
+      doc.setTextColor(...gray);
+      doc.text('By accepting services from Mary\'s Auto Transport, the customer acknowledges and agrees to these terms.', margin, y);
+
+      y += 24;
+      doc.setDrawColor(229, 231, 235);
+      doc.line(margin, y, 560, y);
+      y += 14;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...gray);
+      doc.text('Thank you for your business! For inquiries contact us at (317) 491-3393.', doc.internal.pageSize.width / 2, y, { align: 'center' });
+
+      return doc.output('datauristring').split(',')[1];
     }
 
     function printInvoice() { window.print(); }
