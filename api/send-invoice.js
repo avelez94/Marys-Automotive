@@ -1,40 +1,56 @@
 const sgMail = require('@sendgrid/mail');
-const puppeteer = require('puppeteer-core');
-const chromium = require('@sparticuz/chromium');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const SHOP_EMAIL = process.env.SHOP_EMAIL; // your dad's Gmail, set in Vercel env vars
-const FROM_EMAIL = process.env.FROM_EMAIL; // verified SendGrid sender email
+const SHOP_EMAIL = process.env.SHOP_EMAIL;
+const FROM_EMAIL = process.env.FROM_EMAIL;
 
-function buildInvoiceHTML(data) {
-  const { name, phone, vehicle, odometer, date, lines, partsTotal, laborTotal, grandTotal, wParts, wLabor } = data;
+module.exports = async (req, res) => {
+  const allowedOrigins = ['https://marysautomotive.com', 'https://marys-automotive.vercel.app'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  const formatDate = (val) => {
-    if (!val) return '';
-    const [y, m, d] = val.split('-');
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
-  };
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const rowsHTML = lines.map(l => `
-    <tr>
-      <td style="padding:12px 14px; border-top:1px solid #e5e7eb; font-size:14px; color:#111;">${l.svc}</td>
-      <td style="padding:12px 14px; border-top:1px solid #e5e7eb; font-size:14px; text-align:right; font-weight:700; color:#111;">$${parseFloat(l.parts).toFixed(2)}</td>
-      <td style="padding:12px 14px; border-top:1px solid #e5e7eb; font-size:14px; text-align:right; font-weight:700; color:#111;">$${parseFloat(l.labor).toFixed(2)}</td>
-      <td style="padding:12px 14px; border-top:1px solid #e5e7eb; font-size:14px; text-align:right; font-weight:700; color:#111;">$${(parseFloat(l.parts) + parseFloat(l.labor)).toFixed(2)}</td>
-    </tr>`).join('');
+  try {
+    const { name, customerEmail, pdfBase64 } = req.body;
 
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #111; padding: 48px; font-size: 14px; line-height: 1.5; }
-    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
-    .shop-name { font-size: 22px; font-weight: 800; color: #111; }
-    .shop-name span { color: #8a0e18; }
+    if (!name || !customerEmail || !pdfBase64) {
+      return res.status(400).json({ error: 'Missing required fields.' });
+    }
+
+    await sgMail.send({
+      to: customerEmail,
+      cc: SHOP_EMAIL,
+      from: {
+        email: FROM_EMAIL,
+        name: "Mary's Automotive"
+      },
+      subject: `Your Invoice from Mary's Automotive`,
+      text: `Hi ${name},\n\nPlease find your invoice attached.\n\nThank you for choosing Mary's Automotive!\n(317) 491-3393\n3249 W Washington St, Indianapolis, IN 46222`,
+      html: `<p>Hi ${name},</p><p>Please find your invoice attached.</p><p>Thank you for choosing Mary's Automotive!<br>(317) 491-3393<br>3249 W Washington St, Indianapolis, IN 46222</p>`,
+      attachments: [
+        {
+          content: pdfBase64,
+          filename: `Marys-Automotive-Invoice-${name.replace(/\s+/g, '-')}.pdf`,
+          type: 'application/pdf',
+          disposition: 'attachment'
+        }
+      ]
+    });
+
+    return res.status(200).json({ success: true });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to send invoice. Please try again.' });
+  }
+};    .shop-name span { color: #8a0e18; }
     .shop-info { font-size: 12px; color: #6b7280; margin-top: 4px; line-height: 1.7; }
     .inv-meta { text-align: right; }
     .inv-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: #9ca3af; }
