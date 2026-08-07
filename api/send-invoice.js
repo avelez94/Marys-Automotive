@@ -4,6 +4,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const SHOP_EMAIL = process.env.SHOP_EMAIL;
 const FROM_EMAIL = process.env.FROM_EMAIL;
+const INVOICE_STORAGE = process.env.INVOICE_STORAGE;
 
 module.exports = async (req, res) => {
   const allowedOrigins = ['https://marysautomotive.com', 'https://marys-automotive.vercel.app'];
@@ -26,7 +27,7 @@ module.exports = async (req, res) => {
 
     await sgMail.send({
       to: customerEmail,
-      cc: SHOP_EMAIL,
+      cc: [SHOP_EMAIL, INVOICE_STORAGE],
       from: {
         email: FROM_EMAIL,
         name: "Mary's Automotive"
