@@ -1,6 +1,5 @@
-const sgMail = require('@sendgrid/mail');
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const SHOP_EMAIL = process.env.SHOP_EMAIL;
 const FROM_EMAIL = process.env.FROM_EMAIL;
@@ -25,22 +24,16 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields.' });
     }
 
-    await sgMail.send({
+    await resend.emails.send({
+      from: FROM_EMAIL,
       to: customerEmail,
       cc: [SHOP_EMAIL, INVOICE_STORAGE],
-      from: {
-        email: FROM_EMAIL,
-        name: "Mary's Automotive"
-      },
       subject: `Your Invoice from Mary's Automotive`,
-      text: `Hi ${name},\n\nPlease find your invoice attached.\n\nThank you for choosing Mary's Automotive!\n(317) 491-3393\n3249 W Washington St, Indianapolis, IN 46222`,
       html: `<p>Hi ${name},</p><p>Please find your invoice attached.</p><p>Thank you for choosing Mary's Automotive!<br>(317) 491-3393<br>3249 W Washington St, Indianapolis, IN 46222</p>`,
       attachments: [
         {
-          content: pdfBase64,
-          filename: `Marys-Automotive-Invoice-${name.replace(/\s+/g, '-')}.pdf`,
-          type: 'application/pdf',
-          disposition: 'attachment'
+          content: Buffer.from(pdfBase64, 'base64'),
+          filename: `Marys_Automotive_Invoice_${name.replace(/\s+/g, '_')}.pdf`
         }
       ]
     });
