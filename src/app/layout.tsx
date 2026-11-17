@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   },
   description:
     'Full service auto repair for domestic and foreign vehicles at 3249 W Washington St, Indianapolis. Request a quote or call (317) 491-3393.',
-  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: business.name,
